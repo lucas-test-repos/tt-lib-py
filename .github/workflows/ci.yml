@@ -1,0 +1,21 @@
+name: ci
+
+# Este repositorio es público, así que también se construye en pull
+# requests — a diferencia de los 55 repos privados, aquí no hay cuota de
+# Actions de la organización que proteger, y es la dependencia de todos
+# ellos: conviene saber si una PR la rompe antes de mergear.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: pytest
